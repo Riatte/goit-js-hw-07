@@ -5,7 +5,6 @@ const galleryList = document.querySelector("ul.gallery");
 
 galleryList.insertAdjacentHTML("beforeend", createGallery(galleryItems));
 
-galleryList.addEventListener("click", modulGallery);
 
 function createGallery(items){
     return items.map(({ preview, original, description }) => {
@@ -15,9 +14,6 @@ function createGallery(items){
     }).join('');
 };
 
-function modulGallery(event) {
-    event.preventDefault();
-}
 
 new SimpleLightbox('.gallery a', {
     captions: true,
@@ -25,4 +21,4 @@ new SimpleLightbox('.gallery a', {
     captionDelay: 250,
 });
 
-console.log(galleryItems);
+

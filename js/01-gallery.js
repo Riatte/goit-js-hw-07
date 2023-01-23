@@ -37,13 +37,26 @@ function galleryItemClick(event) {
      if ( !oneGalleryItem) {
         return ;  
     } 
+
     const modalBox = basicLightbox.create(`
     <div class="modal">
     		<img width="1280" heigth ="853" src="${event.target.dataset.source}"> </div>
 	`,
         {
             onShow: (modalBox) => {
-                document.onkeydown = function (evt) {
+                document.addEventListener("keydown", closeEscape(event));
+            },
+            onClose: (modalBox) => { 
+                document.removeEventListener("keydown", closeEscape(event));
+            }
+        });
+    
+    modalBox.show();
+    
+}
+
+//////////////////////////////
+function closeEscape(evt){
                     evt = evt || window.event;
                     var isEscape = false;
                     if ("key" in evt) {
@@ -55,12 +68,5 @@ function galleryItemClick(event) {
                     if (isEscape) {
                         modalBox.close()
                     }
-                }
-            }
-        });
-    modalBox.show();
-}
-
-
-
-console.log(galleryItems);
+};
+//////////////////////////////
