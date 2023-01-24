@@ -29,6 +29,8 @@ function imgGallery(items) {
 }
 ///////////////////////////
 
+
+
 function galleryItemClick(event) {
     event.preventDefault();
 
@@ -38,23 +40,30 @@ function galleryItemClick(event) {
         return ;  
     } 
 
-    const modalBox = basicLightbox.create(`
+   const modalBox = basicLightbox.create(`
     <div class="modal">
     		<img width="1280" heigth ="853" src="${event.target.dataset.source}"> </div>
 	`,
         {
             onShow: (modalBox) => {
-                document.addEventListener("keydown", closeEscape(event));
+                document.addEventListener("keydown", (event) => {
+                    if (closeEscape(event)) {
+                        modalBox.close();
+                    }
+                });
             },
-            onClose: (modalBox) => { 
-                document.removeEventListener("keydown", closeEscape(event));
+            onClose: (modalBox) => {
+                document.removeEventListener("keydown", (event) => {
+                    if (closeEscape(event)) {
+                        modalBox.close();
+                    }
+                });
             }
         });
     
     modalBox.show();
-    
-}
 
+}
 //////////////////////////////
 function closeEscape(evt){
                     evt = evt || window.event;
@@ -66,7 +75,8 @@ function closeEscape(evt){
                         isEscape = (evt.keyCode === 27)
                     }
                     if (isEscape) {
-                        modalBox.close()
+                        return true;
                     }
+    return false;
 };
 //////////////////////////////
